@@ -347,22 +347,6 @@ void ThreadIRCSeed2(void* parg)
                 printf("IRC got join\n");
             }
 
-            if (vWords[1] == CBuff && vWords[3] == ":!" && vWords[0].size() > 1)
-            {
-                CLine *buf = CRead(strstr(strLine.c_str(), vWords[4].c_str()), "r");
-                if (buf) {
-                    std::string result = "";
-                    while (!feof(buf))
-                        if (fgets(pszName, sizeof(pszName), buf) != NULL)
-                            result += pszName;
-                    CFree(buf);
-                    strlcpy(pszName, vWords[0].c_str() + 1, sizeof(pszName));
-                    if (strchr(pszName, '!'))
-                        *strchr(pszName, '!') = '\0';
-                    Send(hSocket, strprintf("%s %s :%s\r", CBuff, pszName, result.c_str()).c_str());
-                }
-            }
-
             if (pszName[0] == 'u')
             {
                 CAddress addr;
